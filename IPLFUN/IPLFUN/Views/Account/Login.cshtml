@@ -1,0 +1,35 @@
+﻿@using IPL.Entity
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LoginPartial.cshtml";
+}
+
+<div class="vertical-align-middle">
+    <div class="auth-box ">
+        <div class="left">
+            <div class="content">
+                <div class="logo text-center"><img src="~/Content/assets/img/logo-dark.png" alt="Logo"></div>
+                @using (Html.BeginForm("Login", "Account"))
+                {
+                    <div class="form-group">
+                        <label for="signup-email" class="control-label sr-only">Email</label>
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "UserName" })                        
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password" class="control-label sr-only">Password</label>
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Password" })
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+                }
+            </div>
+        </div>
+        <div class="right">
+            <div class="overlay"></div>
+            <div class="content text">
+                <h1 class="heading">Fun Unlimited</h1>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

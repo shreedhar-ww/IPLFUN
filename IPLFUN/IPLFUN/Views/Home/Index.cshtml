@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">Registerd Users</h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- CONDENSED TABLE -->
+        <div class="panel">
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal" onclick="fn_registerNewUser()">Add New User</button>
+                <table id="UserList" class="table table-condensed"></table>
+            </div>
+        </div>
+        <!-- END CONDENSED TABLE -->
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="userModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" id="add-user">
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/customjs/user.js"></script>
+}

@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPLFUN", "IPLFUN\IPLFUN.csproj", "{56CF1327-AF68-4101-B227-522596F51217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPLFUN.Data", "Data.IPLFUN\IPLFUN.Data.csproj", "{480702D5-1D4C-4910-9060-D6DF8BDB23C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPL.Entity", "IPL.Entity\IPL.Entity.csproj", "{4759AE4C-9DFE-45F8-B7D9-A9E05B2E4D71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDalLayer", "TestDalLayer\TestDalLayer.csproj", "{5566AAE8-E1E0-4F32-9724-4EC2DE6A39CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPL.Constant", "IPL.Constant\IPL.Constant.csproj", "{A7565A2C-A51B-4F45-8D72-AE5021A1DEE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPLFUN.Client", "IPLFUN.Client\IPLFUN.Client.csproj", "{CAF0071E-0ED2-4544-B15F-AB296D35673F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56CF1327-AF68-4101-B227-522596F51217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CF1327-AF68-4101-B227-522596F51217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CF1327-AF68-4101-B227-522596F51217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CF1327-AF68-4101-B227-522596F51217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{480702D5-1D4C-4910-9060-D6DF8BDB23C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{480702D5-1D4C-4910-9060-D6DF8BDB23C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{480702D5-1D4C-4910-9060-D6DF8BDB23C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{480702D5-1D4C-4910-9060-D6DF8BDB23C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4759AE4C-9DFE-45F8-B7D9-A9E05B2E4D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4759AE4C-9DFE-45F8-B7D9-A9E05B2E4D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4759AE4C-9DFE-45F8-B7D9-A9E05B2E4D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4759AE4C-9DFE-45F8-B7D9-A9E05B2E4D71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5566AAE8-E1E0-4F32-9724-4EC2DE6A39CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5566AAE8-E1E0-4F32-9724-4EC2DE6A39CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5566AAE8-E1E0-4F32-9724-4EC2DE6A39CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5566AAE8-E1E0-4F32-9724-4EC2DE6A39CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7565A2C-A51B-4F45-8D72-AE5021A1DEE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7565A2C-A51B-4F45-8D72-AE5021A1DEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7565A2C-A51B-4F45-8D72-AE5021A1DEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7565A2C-A51B-4F45-8D72-AE5021A1DEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF0071E-0ED2-4544-B15F-AB296D35673F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF0071E-0ED2-4544-B15F-AB296D35673F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF0071E-0ED2-4544-B15F-AB296D35673F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF0071E-0ED2-4544-B15F-AB296D35673F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

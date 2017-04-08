@@ -1,0 +1,45 @@
+﻿@model List<IPL.Entity.BidQuestion>
+@using IPL.Entity;
+@{
+    ViewBag.Title = "BidderIndex";
+    BidQuestion question = new BidQuestion();
+    if (Model != null && Model.Count > 0)
+    {
+        question = Model[0];
+    }
+}
+
+@if (!string.IsNullOrEmpty(question.TeamA))
+{
+    <h3 class="page-title">@question.TeamA Vs. @question.TeamB</h3>
+    <div class="row">
+        <div class="col-md-12">
+            <!-- PANEL HEADLINE -->
+            <div class="panel panel-headline">
+                <div class="panel-body">
+                    @if (!question.AlreadySubmitted)
+                    {
+                        <div class="hide-for-success">
+                            <p>@question.bidQuestion</p>
+                            <button class="btn btn-default" onclick="fn_SubmitBidResultByBidder('Yes',@question.MasterId)">Yes</button>
+                            <button class="btn btn-primary active" onclick="fn_SubmitBidResultByBidder('No',@question.MasterId)">No</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>You have alredy submitted your vote</p>
+                    }
+                    <p style="display:none" class="for-success">Thank you for submitting your bid!!</p>
+                </div>
+            </div>
+            <!-- END PANEL HEADLINE -->
+        </div>
+    </div>
+}
+else
+{
+    <h3 class="page-title">No questions are set yet.</h3>
+}
+@section scripts{
+    <script src="~/Scripts/customjs/Schedule.js"></script>
+}

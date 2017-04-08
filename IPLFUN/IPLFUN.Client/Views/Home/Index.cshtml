@@ -1,0 +1,140 @@
+﻿@using IPL.Entity
+@model LoginViewModel
+<!doctype html>
+<!--[if lt IE 7]>		<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="zxx"> <![endif]-->
+<!--[if IE 7]>			<html class="no-js lt-ie9 lt-ie8" lang="zxx"> <![endif]-->
+<!--[if IE 8]>			<html class="no-js lt-ie9" lang="zxx"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zxx">
+<!--<![endif]-->
+<head>
+
+</head>
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!--************************************
+            Wrapper Start
+    *************************************-->
+    <div id="tg-wrapper" class="tg-wrapper tg-haslayout">
+        <header id="tg-header" class="tg-header tg-haslayout">
+            <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="tg-topbar tg-haslayout">
+                            <nav id="tg-topaddnav" class="tg-topaddnav">
+                                <a href="javascript()" class="tg-btn pull-left" style="margin-bottom:2%;z-index:99999;margin-left:2%;" data-toggle="modal" data-target="#tg-login">Schedule</a>
+                                <a href="javascript()" class="tg-btn pull-right" style="margin-bottom:2%;z-index:99999;margin-right:2%;" data-toggle="modal" data-target="#tg-login">login</a>
+                            </nav>
+                        </div>
+                        <nav id="tg-nav" class="tg-nav brand-center">
+                            <div class="navbar-header">
+                                <strong class="tg-logo">
+                                    <a href="index.html"><img src="~/Content/images/logo.png" alt="image description"></a>
+                                </strong>
+                            </div>
+                            <div id="tg-navigation" class="tg-navigation">
+                                <div class="tg-colhalf">
+                                </div>
+                                <div class="tg-colhalf">
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--************************************
+                Header End
+        *************************************-->
+        <!--************************************
+                Home Slider Start
+        *************************************-->
+        <div class="tg-sliderbox">
+            <div id="tg-home-slider" class="tg-home-slider tg-haslayout">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="container">
+                            <figure class="floating">
+                                <img src="~/Content/images/slider/img-01.png" alt="image description">
+                            </figure>
+                            <div class="tg-slider-content">
+                                <h1>alive and <span>kickin</span></h1>
+                                <div class="tg-btnbox">
+                                    <h2>from june 27</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--************************************
+                Home Slider End
+        *************************************-->
+        <!--************************************
+            LightBoxes End
+        *************************************-->
+        <div class="tg-modalbox modal fade" id="tg-login" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="tg-modal-content">
+                    <div class="tg-formarea">
+                        <div class="tg-border-heading">
+                            <h3>Login</h3>
+                        </div>
+                        @using (Ajax.BeginForm("Login", "Home", new AjaxOptions
+                        {//GetPatients is name of method in PatientController
+                            InsertionMode = InsertionMode.Replace, //target element(#patientList) will be replaced
+                            //UpdateTargetId = "patientList",
+                            //LoadingElementId = "loader", // div with .gif loader - that is shown when data are loading
+                            OnSuccess= "OnSuccess"
+
+                        }))
+                        {
+                            <fieldset>
+                                <div class="form-group">
+                                    @*<input type="text" name="userName/email" class="form-control" placeholder="username/email">*@
+                                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @placeholder = "UserName" })
+
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="password" name="password" class="form-control" placeholder="password">*@
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "password" })
+                                </div>
+                                <div class="form-group">
+                                    <button class="tg-btn tg-btn-lg login-btn" type="submit">Login Now</button>
+                                </div>
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<script src="~/Content/js/vendor/jquery-library.js"></script>
+        <script src="~/Content/js/vendor/bootstrap.min.js"></script>
+        <script src="~/Content/js/customScrollbar.min.js"></script>
+        <script src="~/Content/js/owl.carousel.js"></script>
+        <script src="~/Content/js/isotope.pkgd.js"></script>
+        <script src="~/Content/js/prettyPhoto.js"></script>
+        <script src="~/Content/js/swiper.min.js"></script>
+        <script src="~/Content/js/jquery-ui.js"></script>
+        <script src="~/Content/js/countTo.js"></script>
+        <script src="~/Content/js/appear.js"></script>
+        <script src="~/Content/js/main.js"></script>*@
+</body>
+</html>
+<script>
+   
+    $(document).ready(function () {
+        console.log("ready!");
+        function OnSuccess(response) {
+            alert(response);
+        }
+
+        function OnFailure(response) {
+            alert("Whoops! That didn't go so well did it?");
+        }
+    });
+</script>

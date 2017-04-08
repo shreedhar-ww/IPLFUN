@@ -1,0 +1,172 @@
+﻿@model List<IPL.Entity.BidQuestion>
+@using IPL.Entity;
+@{
+    ViewBag.Title = "SetBidAnswers";
+    Schedule match = ViewBag.MatchDetails;
+    string className = string.Empty;
+    string activeClassForResult = string.Empty;
+    string yesForQuestion = string.Empty;
+    string noForQuestion = string.Empty;
+    string yesForResult = string.Empty;
+    string noForResult = string.Empty;
+    bool areButtonsDisabled = false;
+}
+<input type="hidden" value="@match.Id" id="matchId">
+<h3 class="page-title">@match.TeamA Vs. @match.TeamB</h3>
+<div class="row">
+    <div class="col-md-6">
+        <!-- PANEL HEADLINE -->
+        <div class="panel panel-headline">
+            <div class="panel-heading">
+                <h3 class="panel-title">@match.TeamA</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed bid-questions">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Is Bid Active</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (BidQuestion question in Model.Where(b => b.Team == "A"))
+                        {
+                            className = string.Empty;
+                            areButtonsDisabled = false;
+                            noForResult = ""; yesForResult = ""; noForQuestion = ""; yesForQuestion = "";
+                            if (question.IsBidResult != null)
+                            {
+                                className = "strikeout";
+                                areButtonsDisabled = true;
+                            }
+                            if (question.IsBidResult == false)
+                            {
+                                noForResult = "active btn-primary";
+                            }
+                            else if (question.IsBidResult == true)
+                            {
+                                yesForResult = "active btn-primary";
+                            }
+                            if ( question.IsBidActive == null || question.IsBidActive == false)
+                            {
+                                noForQuestion = "active btn-primary";
+                            }
+                            else if (question.IsBidActive == true)
+                            {
+                                yesForQuestion = "active btn-primary";
+                            }
+                            <tr id="@question.bidId" class="@className">
+                                <td>@question.bidQuestion</td>
+                                <td>
+                                    <div class="btn-group btn-toggle">
+                                        <button class="btn btn-xs btn-default btn-option @yesForQuestion" onclick="fn_ActivateQuestion('Yes',@question.bidId)" disabled="@areButtonsDisabled">Yes</button>
+                                        <button class="btn btn-xs btn-default btn-option @noForQuestion" onclick="fn_ActivateQuestion('No',@question.bidId)" disabled="@areButtonsDisabled">No</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs btn-option btn-default yes @yesForResult" onclick="fn_SubmitResult('Yes',@question.bidId)" disabled="@areButtonsDisabled">Yes</button>
+                                        <button class="btn btn-xs btn-option btn-default no @noForResult" onclick="fn_SubmitResult('No',@question.bidId)" disabled="@areButtonsDisabled">No</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <!-- END PANEL HEADLINE -->
+    </div>
+    <div class="col-md-6">
+        <!-- PANEL NO PADDING -->
+        <div class="panel panel-headline">
+            <div class="panel-heading">
+                <h3 class="panel-title">Royal Challengers</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed bid-questions">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Is Bid Active</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (BidQuestion question in Model.Where(b => b.Team == "B"))
+                        {
+                            className = string.Empty;
+                            areButtonsDisabled = false;
+                            noForResult = ""; yesForResult = ""; noForQuestion = ""; yesForQuestion = "";
+                            if (question.IsBidResult != null)
+                            {
+                                className = "strikeout";
+                                areButtonsDisabled = true;
+                            }
+                            if (question.IsBidResult == false)
+                            {
+                                noForResult = "active btn-primary";
+                            }
+                            else if (question.IsBidResult == true)
+                            {
+                                yesForResult = "active btn-primary";
+                            }
+                            if (question.IsBidActive == null || question.IsBidActive == false)
+                            {
+                                noForQuestion = "active btn-primary";
+                            }
+                            else if (question.IsBidActive == true)
+                            {
+                                yesForQuestion = "active btn-primary";
+                            }
+                            <tr id="@question.bidId" class="@className">
+                                <td>@question.bidQuestion</td>
+                                <td>
+                                    <div class="btn-group btn-toggle">
+                                        <button class="btn btn-xs btn-default btn-option @yesForQuestion" onclick="fn_ActivateQuestion('Yes',@question.bidId)" disabled="@areButtonsDisabled">Yes</button>
+                                        <button class="btn btn-xs btn-default btn-option @noForQuestion" onclick="fn_ActivateQuestion('No',@question.bidId)" disabled="@areButtonsDisabled">No</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs btn-default btn-option yes @yesForResult" onclick="fn_SubmitResult('Yes',@question.bidId)" disabled="@areButtonsDisabled">Yes</button>
+                                        <button class="btn btn-xs btn-default btn-option no @noForResult" onclick="fn_SubmitResult('No',@question.bidId)" disabled="@areButtonsDisabled">No</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END PANEL NO PADDING -->
+    </div>    
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary" href="/IPL/Schedule"> Back </a>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/Scripts/customjs/Schedule.js"></script>
+    <script type="text/javascript">
+
+        $('.btn-option').click(function () {
+            var clickedButton = $(this);
+            $(clickedButton).addClass("active");
+            $(clickedButton).addClass("btn-primary");
+            $(clickedButton).removeClass("btn-default");
+            var nextButton = $(this).siblings();
+            $(nextButton).removeClass("active");
+            $(nextButton).removeClass("btn-primary");
+            $(nextButton).addClass("btn-default");
+        });
+
+        $('form').submit(function () {
+            alert($(this["options"]).val());
+            return false;
+        });
+    </script>
+}

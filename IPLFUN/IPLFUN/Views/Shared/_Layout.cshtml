@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- CSS -->
+    <link href="~/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/vendor/icon-sets.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/main.css" rel="stylesheet" />
+    <link href="~/Content/Custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/assets/img/apple-icon.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="~/Content/assets/img/favicon.png" />   
+    <script>
+        function fn_HideAlert() {            
+            $("#result").hide();
+        }
+    </script>
+</head>
+<body>
+    <div id="result" style="display:none;">
+        <div class="alert">
+            <a href="#" class="close" onclick="fn_HideAlert()">&times;</a>
+            <span class="resultMessage"></span>
+        </div>
+    </div>
+    <!-- WRAPPER -->
+    <div id="wrapper">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="brand">
+                <a href="index.html"><img src="~/Content/assets/img/logo.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+            </div>
+            <div class="sidebar-scroll">
+                <nav>
+                    <ul class="nav">
+                        <li><a href="/Home/Index" class=""><i class="lnr lnr-user"></i> <span>Users</span></a></li>
+                        <li><a href="/IPL/Schedule" class=""><i class="lnr lnr-calendar-full"></i> <span>Match Schedule</span></a></li>
+                        <li><a href="/IPL/BidderIndex" class=""><i class="lnr lnr-home"></i> <span>Bidder's Dashboard</span></a></li>
+                        <li><a href="/IPL/BidHistory" class=""><i class="lnr lnr-history"></i> <span>Bid History</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- MAIN -->
+        <div class="main">
+            <!-- NAVBAR -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-btn">
+                        <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-menu">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <i class="fa fa-bars icon-nav"></i>
+                        </button>
+                    </div>
+                    <div id="navbar-menu" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Lokesh</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Account/Logout"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- END NAVBAR -->
+            <!-- MAIN CONTENT -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+            <!-- END MAIN CONTENT -->
+            <footer>
+                <div class="container-fluid">
+                    <p class="copyright">&copy; 2016. Designed &amp; Crafted by <a href="https://themeineed.com">The Develovers</a></p>
+                </div>
+            </footer>
+        </div>
+        <!-- END MAIN -->
+    </div>
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+    <script src="~/Content/assets/js/jquery/jquery-2.1.0.min.js"></script>
+    <script src="~/Content/assets/js/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/assets/js/klorofil.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/1.0.1/js/dataTables.responsive.min.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/a5734b29083/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/customjs/global.js"></script>
+    @*<script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>*@
+    <script>
+        var currentPath = location.pathname;
+        $("ul.nav li").each(function () {
+            $(this).find("a").removeClass("active");
+            var selectedPath = $(this).find("a").attr("href");
+            if (currentPath == selectedPath)
+                $(this).find("a").addClass("active");
+        })
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

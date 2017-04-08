@@ -1,0 +1,28 @@
+﻿#result {
+    height: 0;
+    position: fixed;
+    text-align: center;
+    top: 3%;
+    width: 50%;
+    z-index: 1100;
+    left: 30%;
+}
+.bid-questions table { border-collapse: collapse; empty-cells: show; }
+
+.bid-questions td { position: relative; }
+
+.bid-questions tr.strikeout td:before {
+  content: " ";
+  position: absolute;
+  top: 47%;
+  left: 0;
+  border-bottom: 1px solid #111;
+  width: 100%;
+}
+
+.bid-questions tr.strikeout td:after {
+  content: "\00B7";
+  font-size: 1px;
+}
+/* Extra styling */
+.bid-questions th { text-align: left; }
