@@ -1,0 +1,80 @@
+﻿@model List<IPL.Entity.BidHistory>
+@using IPL.Entity;
+@{
+    var currentUser = ViewBag.user;
+}
+<section class=" tg-haslayout tg-bgstyletwo" style="height:100%;">
+    <header id="tg-header" class="tg-header tg-haslayout">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="tg-topbar tg-haslayout">
+                    <nav id="tg-topaddnav" class="tg-topaddnav">
+                        <a href="/Home/Bid" class="tg-btn pull-left" style="margin-bottom:1%;z-index:99999;margin-left:2%;">Bid Question</a>
+                        <a href="/Home/LogOut" class="tg-btn pull-right" style="z-index:99999;margin-right:2%;">Logout</a>
+                        <span style="color:#fff;margin-right: 1%;margin-top: 1%;" class="pull-right">Welcome, @currentUser.Name</span>
+                    </nav>
+                </div>
+                <nav id="tg-nav" class="tg-nav brand-center">
+                    <div class="navbar-header">
+                        <strong class="tg-logo">
+                            <a href="/home/bid"><img src="/Content/images/logo.png" alt="image description"></a>
+                        </strong>
+                    </div>
+                    <div id="tg-navigation" class="tg-navigation">
+                        <div class="tg-colhalf">
+                        </div>
+                        <div class="tg-colhalf">
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="tg-bgboxone"></div>
+    <div class="tg-bgboxtwo"></div>
+    <div class="tg-bgpattrant">
+        <div class="container">
+            <div class="row">
+                <div class="tg-pointstablewrapper">
+                    <div class="col-sm-8 col-xs-12">
+                        <div class="tg-pointstable">
+                            <div class="tg-section-heading"><h2 style="color:#ffcc33">points table</h2></div>
+                            <table class="table bid-history" style="color:#fff;">
+                                <thead>
+                                    <tr>
+                                        <td>Match</td>
+                                        <td>Date</td>
+                                        <td>Points</td>                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   @if (Model.Count > 0)
+                                   {
+                                       foreach (var item in Model)
+                                       {
+                                        <tr>
+                                            <td>@item.Question<br><span style="font-size:11px">(@item.Match)</span></td>
+                                            <td>@item.MatchDate</td>
+                                            <td>@item.Points</td>
+                                        </tr>
+                                       }
+                                   }
+                                   else
+                                   {
+                                    <tr><td colspan="3">No Data Found</td></tr>
+                                   }
+                                </tbody>
+                            </table>                            
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-xs-12 hidden-xs">
+                        <figure style="padding-top:27%;">
+                            <img src="~/Content/images/img-03.png" alt="image description">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

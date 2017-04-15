@@ -71,19 +71,25 @@ function fn_SetQuestions() {
         }
         rowCount++;
     });
-    questions = JSON.stringify({ 'questions': questions, 'matchId': matchId });
-    $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        type: 'POST',
-        url: '/IPL/SaveBidQuestions',
-        data: questions,
-        success: function (response) {
-            ShowMessage(response.data.Status, response.data.Message);
-        },
-        failure: function (response) {
-        }
-    });
+
+    if (questions.length > 0) {
+        questions = JSON.stringify({ 'questions': questions, 'matchId': matchId });
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '/IPL/SaveBidQuestions',
+            data: questions,
+            success: function (response) {
+                ShowMessage(response.data.Status, response.data.Message);
+            },
+            failure: function (response) {
+            }
+        });
+    }
+    else {
+        ShowMessage(1,"Please activate atleast one question.");
+    }
 }
 
 function fn_ActivateQuestion(val, bidId) {

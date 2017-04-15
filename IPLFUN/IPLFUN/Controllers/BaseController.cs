@@ -22,12 +22,12 @@ namespace IPLFUN.Controllers
                 string roleID = userData.Split(':')[0];
                 if (roleID != Constant.adminRoleId)
                 {
-                    filterContext.Result = new RedirectResult("\\Account\\Login");
+                    filterContext.Result = new RedirectResult("/Account/Login");
                 }
             }
             else
             {
-                filterContext.Result = new RedirectResult("\\Account\\Login");
+                filterContext.Result = new RedirectResult("/Account/Login");
             }
                     
         }

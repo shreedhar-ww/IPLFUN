@@ -31,8 +31,8 @@ namespace IPLFUN.Controllers
                               Day = string.Format("{0:g}", Convert.ToDateTime(item.matchDate)),
                               TeamA = item.TeamA,
                               TeamB = item.TeamB,
-                              SetQuestions = "<a class='btn btn-info btn-sm' href='javascipt:void(0);' onclick='fn_setMatchDetails(" + item.Id.ToString() + ",\"" + item.TeamA.ToString() + "\"" + ",\"" + item.TeamB.ToString() + "\")'>Set Questions</a>",
-                              SetAnswers = "<a class='btn btn-info btn-sm' href='javascipt:void(0);' onclick='fn_setMatchDetailsForAnswers(" + item.Id.ToString() + ",\"" + item.TeamA.ToString() + "\"" + ",\"" + item.TeamB.ToString() + "\")'>Set Answers</a>",
+                              SetQuestions = "<a class='btn btn-info btn-sm' href='#' onclick='fn_setMatchDetails(" + item.Id.ToString() + ",\"" + item.TeamA.ToString() + "\"" + ",\"" + item.TeamB.ToString() + "\")'>Set Questions</a>",
+                              SetAnswers = "<a class='btn btn-info btn-sm' href='#' onclick='fn_setMatchDetailsForAnswers(" + item.Id.ToString() + ",\"" + item.TeamA.ToString() + "\"" + ",\"" + item.TeamB.ToString() + "\")'>Set Answers</a>",
                           }).ToArray(),
             };
             return Json(vList, JsonRequestBehavior.AllowGet);
@@ -89,7 +89,7 @@ namespace IPLFUN.Controllers
             return View(bidQuestions);
         }
 
-        public ActionResult ActivateBidQuestion(bool val, int bidId,int matchId)
+        public ActionResult ActivateBidQuestion(bool val, int bidId, int matchId)
         {
             int success = iplSchedule.activateBidQuestion(val, bidId, matchId);
             if (success == 1)
@@ -100,7 +100,7 @@ namespace IPLFUN.Controllers
 
         public ActionResult SubmitBidResult(bool val, int bidId, int matchId)
         {
-            int success = iplSchedule.updateBidStatusAndCalculatePoint(bidId, matchId,val, getUserID());
+            int success = iplSchedule.updateBidStatusAndCalculatePoint(bidId, matchId, val, getUserID());
             if (success == 1)
                 return Json(new { data = new Result { Status = ResultStatus.Success, Message = "Result updated successfully." } }, JsonRequestBehavior.AllowGet);
             else
@@ -116,9 +116,9 @@ namespace IPLFUN.Controllers
 
         public ActionResult SubmitBidResultByBidder(bool val, int masterId)
         {
-            int success = iplSchedule.submitBidResultByBidder(val, masterId, getUserID());
-            if (success == 1)
-                return Json(new { data = new Result { Status = ResultStatus.Success, Message = "Your pole submitted successfully." } }, JsonRequestBehavior.AllowGet);
+            BidResult success = iplSchedule.submitBidResultByBidder(val, masterId, getUserID());
+            if (success.IsSucceed == 1)
+                return Json(new { data = new Result { Status = ResultStatus.Success, Message = "Your pole submitted successfully." }, favour = success.InFavour, against = success.Against, history = success.BidHistory }, JsonRequestBehavior.AllowGet);
             else
                 return Json(new { data = new Result { Status = ResultStatus.Error, Message = "Error occurred while submitting pole." } }, JsonRequestBehavior.AllowGet);
         }

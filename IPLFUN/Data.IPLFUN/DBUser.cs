@@ -102,6 +102,7 @@ namespace Data.IPLFUN
                         user= new IPLUser();
                         user.roleId = Convert.ToInt32(reader["roleId"].ToString());
                         user.userId = Convert.ToInt32(reader["ID"].ToString());
+                        user.Name = reader["Name"].ToString();
                     }
                 }
                 catch (Exception ex)
@@ -111,6 +112,29 @@ namespace Data.IPLFUN
             }
             return user;
 
+        }
+
+        public int checkUsernameExists(string userName)
+        {
+            int success = -1;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("USP_CheckUserNameExists", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@userName", userName));                    
+                    success = (int)command.ExecuteScalar();
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return success;
         }
     }
 }

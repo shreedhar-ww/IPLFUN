@@ -26,3 +26,4 @@
 }
 /* Extra styling */
 .bid-questions th { text-align: left; }
+.field-validation-error {color:red;}

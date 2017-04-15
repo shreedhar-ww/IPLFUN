@@ -1,0 +1,292 @@
+﻿@model List<IPL.Entity.BidQuestion>
+@using Newtonsoft.Json;
+@using IPL.Entity;
+@{
+    ViewBag.Title = "BidderIndex";
+    BidQuestion question = new BidQuestion();
+    if (Model != null && Model.Count > 0)
+    {
+        question = Model[0];
+    }
+    string currentSlide = string.Empty;
+    var currentUser = ViewBag.user;
+    string activeClass = string.Empty;
+    int activeSlide = 0;
+}
+
+<section class=" tg-haslayout tg-bgstyleone">
+    <header id="tg-header" class="tg-header tg-haslayout">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="tg-topbar tg-haslayout">
+                    <nav id="tg-topaddnav" class="tg-topaddnav">
+                        <a href="/Home/History" class="tg-btn pull-left" style="margin-bottom:1%;z-index:99999;margin-left:2%;">Bid History</a>
+                        <a href="/Home/LogOut" class="tg-btn pull-right" style="z-index:99999;margin-right:2%;">Logout</a>
+                        <span style="color:#fff;margin-right: 1%;margin-top: 1%;" class="pull-right">Welcome, @currentUser.Name</span>
+                    </nav>
+                </div>
+                <nav id="tg-nav" class="tg-nav brand-center">
+                    <div class="navbar-header">
+                        <strong class="tg-logo">
+                            <a href="/home/bid"><img src="/Content/images/logo.png" alt="image description"></a>
+                        </strong>
+                    </div>
+                    <div id="tg-navigation" class="tg-navigation">
+                        <div class="tg-colhalf">
+                        </div>
+                        <div class="tg-colhalf">
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div class="tg-bgboxone"></div>
+    <div class="tg-bgboxtwo"></div>
+    <div class="tg-bgpattrant">
+        <div class="container">
+            <div class="row">
+                <div class="tg-upcomingmatch-counter question-section">
+                    <div class="col-md-4 col-sm-4 col-xs-12 hidden-xs">
+                        <figure style="padding-top:27%">
+                            <img src="~/content/images/img-02.png" alt="image description">
+                        </figure>
+                    </div>
+
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        @*@if (!string.IsNullOrEmpty(question.Team))
+                            {
+                                <div class="tg-contentbox hide-for-success" style="height:600px;">
+                                    <div class="tg-description"><h4 style="color:green" class="success-msg"></h4></div>
+                                    <div class="tg-section-heading"><h2 style="color:white">@question.TeamA Vs. @question.TeamB</h2></div>
+                                    <div class="tg-description question">
+                                        <h4 style="color:white">@question.bidQuestion</h4>
+                                    </div>
+                                    <div class="tg-counters" style="border-bottom: 1px solid #aeaeae;margin: 0 0 15px;padding: 0 0 15px;">
+                                        <div class="tg-counter tg-In-Favours"><h3>@question.InFavour</h3><h4>In-Favour</h4></div>
+                                        <div class="tg-counter tg-Against"><h3>@question.Against</h3><h4>Against</h4></div>
+                                        <div class="tg-counter tg-TotalPoints"><h3>@question.bidPoints</h3><h4>Bid points</h4></div>
+                                    </div>
+                                    <div class="tg-themebtnprev" onclick="fn_PreviousQuestion()" style="border:1px solid #ffcc33;top:52%;right:4%;"><span class="fa fa-angle-up" style="color:white"></span></div>
+                                    <div class="tg-themebtnnext" onclick="fn_NextQuestion()" style="border:1px solid #ffcc33;top:73%;right:4%;"><span class="fa fa-angle-down" style="color:white"></span></div>
+
+                                    <div class="tg-btnbox">
+                                        <button class="tg-btn yes" href="#" onclick="fn_SubmitBidResultByBidder('Yes',@question.MasterId)"><span>YES</span></button>
+                                        <button class="tg-btn no" href="#" onclick="fn_SubmitBidResultByBidder('No',@question.MasterId)"><span>NO</span></button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="tg-contentbox">
+                                    <div class="tg-description">
+                                        <h4 style="color:white">Bid is not set yet.</h4>
+                                    </div>
+                                </div>
+                            }*@
+                        @if (!string.IsNullOrEmpty(question.Team))
+                        {
+                            <div id="question" class="carousel slide tg-contentbox" data-interval="false">
+                                <!-- Carousel items -->
+                                <div class="carousel-inner">
+                                    @foreach (BidQuestion ques in Model)
+                                    {
+                                        activeClass = activeSlide == 0 ? "active" : "";
+                                        currentSlide = "question_" + @ques.MasterId;
+                                        <div class="item @activeClass" id="@currentSlide">
+                                            <div class="tg-description"><h4 style="color:green" class="success-msg"></h4></div>
+                                            <div class="tg-section-heading"><h2 style="color:#ffcc33">@ques.TeamA Vs. @ques.TeamB</h2></div>
+                                            <div class="tg-description question">
+                                                <h4 style="color:white">@ques.bidQuestion</h4>
+                                            </div>
+                                            <div class="tg-counters" style="border-bottom: 1px solid #aeaeae;margin: 0 0 15px;padding: 0 0 15px;">
+                                                <div class="tg-counter tg-In-Favours"><h3>@ques.InFavour</h3><h4>In-Favour</h4></div>
+                                                <div class="tg-counter tg-Against"><h3>@ques.Against</h3><h4>Against</h4></div>
+                                                <div class="tg-counter tg-TotalPoints"><h3>@ques.bidPoints</h3><h4>Bid points</h4></div>
+                                            </div>
+                                            @if (ques.IsBidActive == true)
+                                            {
+                                                <div class="tg-btnbox">
+                                                    <button class="tg-btn yes" href="#" onclick="fn_SubmitBidResultByBidder('Yes',@ques.MasterId)"><span>YES</span></button>
+                                                    <button class="tg-btn no" href="#" onclick="fn_SubmitBidResultByBidder('No',@ques.MasterId)"><span>NO</span></button>
+                                                </div>
+                                            }
+                                        </div>
+                                        activeSlide++;
+                                    }
+                                </div>
+                                <!-- Carousel nav -->
+                                <a class="carousel-control left" style="background-color:none;" href="#question" data-slide="prev">&lsaquo;</a>
+                                <a class="carousel-control right" style="background-color:none;" href="#question" data-slide="next">&rsaquo;</a>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="tg-contentbox">
+                                <div class="tg-description">
+                                    <h4 style="color:white">Bid is not set yet.</h4>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-12 pull-right">
+                    <h4 style="color:#ffcc33">Bid History</h4>
+                    <hr />
+                    <table class="table current-bid-history">
+                        <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>phone</td>
+                                <td>Name</td>
+                                <td>phone</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AAAA</td>
+                                <td>323232</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>CCCCC</td>
+                                <td>3435656</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>CCCCC</td>
+                                <td>3435656</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>CCCCC</td>
+                                <td>3435656</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>CCCCC</td>
+                                <td>3435656</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                            <tr>
+                                <td>CCCCC</td>
+                                <td>3435656</td>
+                                <td>BBBBB</td>
+                                <td>323232</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    //var bidCount = 1;
+    //var list = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model))');
+    function fn_SubmitBidResultByBidder(val, masterId) {
+        $(".yes").attr("disabled", "disabled");
+        $(".no").attr("disabled", "disabled");
+        if (val == "Yes") val = true; else val = false;
+        $.ajax({
+            type: "POST",
+            url: "/Home/SubmitBidResultByBidder",
+            data: { masterId: masterId, val: val },
+            success: function (response) {
+                if (response.data.Status == 0) {
+                    var activeClass = $(".carousel-inner .active");
+                    $(".for-success").show();
+                    $(".success-msg").html("Thank you for submitting your bid!!");
+                    $(activeClass).find('.tg-counter.tg-In-Favours > h3').html(response.favour);
+                    $(activeClass).find('.tg-counter.tg-Against > h3').html(response.against);
+                    $(activeClass).find('.tg-counter.tg-Against > h3').html(response.bidPoints);
+                    //for (var i = 0; i < list.length; i++) {
+                    //    if (list[i].MasterId == masterId) {
+                    //        list[i].Against = response.against;
+                    //        list[i].InFavour = response.favour;
+                    //        break;
+                    //    }
+                    //}
+                }
+                else if (response.data.Status == 2) {
+                    $(".for-success").show();
+                    $(".success-msg").html(response.data.Message);
+                }
+                else {
+                    $(".for-success").show();
+                    $(".success-msg").html("Unable to submit bid!!");
+                }
+                setTimeout(function () {
+                    $(".for-success").hide();
+                    $(".success-msg").html("");
+                }, 5000);
+                $(".yes").removeAttr("disabled");
+                $(".no").removeAttr("disabled");
+            }
+        });
+    }
+    $('.carousel-control.left').click(function () {
+        $(".for-success").hide();
+        $(".success-msg").html("");
+        $('#question').carousel('prev');
+    });
+
+    $('.carousel-control.right').click(function () {
+        $(".for-success").hide();
+        $(".success-msg").html("");
+        $('#question').carousel('next');
+    });
+    //function fn_NextQuestion() {
+    //    $(".for-success").hide();
+    //    $(".success-msg").html("");
+    //    if (bidCount < list.length) {
+    //        var model = list[bidCount];
+    //        $('.tg-counter.tg-In-Favours > h3').html(model.InFavour);
+    //        $('.tg-counter.tg-Against > h3').html(model.Against);
+    //        $('.tg-counter.tg-TotalPoints > h3').html(model.bidPoints);
+    //        $('.question > h4').html(model.bidQuestion);
+    //        $(".yes").attr("onClick", "fn_SubmitBidResultByBidder('Yes'," + model.MasterId + ")")
+    //        $(".no").attr("onClick", "fn_SubmitBidResultByBidder('No'," + model.MasterId + ")")
+    //        bidCount++;
+    //    }
+    //}
+    //function fn_PreviousQuestion() {
+    //    $(".for-success").hide();
+    //    $(".success-msg").html("");
+    //    if (bidCount > 0) {
+    //        bidCount--;
+    //        var model = list[bidCount];
+    //        $('.tg-counter.tg-In-Favours > h3').html(model.InFavour);
+    //        $('.tg-counter.tg-Against > h3').html(model.Against);
+    //        $('.tg-counter.tg-TotalPoints > h3').html(model.bidPoints);
+    //        $('.question > h4').html(model.bidQuestion);
+    //        $(".yes").attr("onClick", "fn_SubmitBidResultByBidder('Yes'," + model.MasterId + ")")
+    //        $(".no").attr("onClick", "fn_SubmitBidResultByBidder('No'," + model.MasterId + ")")
+    //    }
+    //    if (bidCount == 0) bidCount = 1;
+
+    //}
+</script>

@@ -1,28 +1,28 @@
 ﻿@using IPL.Entity
 @model IPLBidder
-@using (Ajax.BeginForm("CreateUser", "User", new AjaxOptions { OnSuccess = "fn_RegistrationSuccess()", OnFailure = "fn_RegistrationFailure()" }))
+@using (Ajax.BeginForm("CreateUser", "User", new AjaxOptions { OnSuccess = "fn_RegistrationSuccess"}))
 {
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Register New User</h4>
     </div>
     <div class="modal-body">
-        @Html.TextBoxFor(model => model.firstName, new { @class = "form-control", @placeholder = "First Name" })
+        @Html.TextBoxFor(model => model.firstName, new { @class = "form-control",@maxlength= 50, @placeholder = "First Name" })
         @Html.ValidationMessageFor(model => model.firstName)
         <br>
-        @Html.TextBoxFor(model => model.lastName, new { @class = "form-control", @placeholder = "Last Name" })
+        @Html.TextBoxFor(model => model.lastName, new { @class = "form-control", @maxlength = 50, @placeholder = "Last Name" })
         @Html.ValidationMessageFor(model => model.lastName)
         <br>
-        @Html.TextBoxFor(model => model.userName, new { @class = "form-control", @placeholder = "UserName" })
+        @Html.TextBoxFor(model => model.userName, new { @class = "form-control", @maxlength = 50, @placeholder = "UserName" })
         @Html.ValidationMessageFor(model => model.userName)
         <br>
-        @Html.TextBoxFor(model => model.email, new { @class = "form-control", @placeholder = "Email" })
+        @Html.TextBoxFor(model => model.email, new { @class = "form-control", @maxlength = 50, @placeholder = "Email" })
         @Html.ValidationMessageFor(model => model.email)
         <br>
-        @Html.TextBoxFor(model => model.mobileNumber, new { @class = "form-control", @placeholder = "Mobile Number" })
+        @Html.TextBoxFor(model => model.mobileNumber, new { @class = "form-control number", @maxlength = 10, @placeholder = "Mobile Number" })
         @Html.ValidationMessageFor(model => model.mobileNumber)
         <br>
-        @Html.TextBoxFor(model => model.points, new { @class = "form-control", @placeholder = "Points" })
+        @Html.TextBoxFor(model => model.points, new { @class = "form-control", @maxlength = 7, @placeholder = "Points" })
         @Html.ValidationMessageFor(model => model.points)
         <br>
     

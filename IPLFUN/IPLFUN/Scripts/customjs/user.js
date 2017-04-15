@@ -19,7 +19,8 @@ function getGrid() {
         "bDestroy": true,
         "bFilter": false,
         "bInfo": true,
-        "bSortCellsTop": true
+        "bSortCellsTop": true,
+        "bLengthChange": false,
     });
 }
 
@@ -27,15 +28,26 @@ function fn_registerNewUser() {
     $("#add-user").load("/User/CreateUser");
 }
 
-function fn_RegistrationSuccess(data) {
+//function fn_submitForm()
+//{
+//    $.ajax({
+//        type: "POST",
+//        url: "/IPL/SubmitBidResultByBidder",
+//        data: { masterId: masterId, val: val },
+//        success: function (response) {
+//            $("#userModal").modal("toggle");
+//            ShowMessage(response.data.Status, response.data.Message);
+//            getGrid();
+//        }
+//    });
+//}
+
+function fn_RegistrationSuccess(response) {
     debugger;
     $("#userModal").modal("toggle");
-    ShowMessage(data.Status, data.Message);
+    ShowMessage(response.data.Status, response.data.Message);
     getGrid();
 }
 
-function fn_RegistrationFailure()
-{
-    alert("failed");
-}
+
 

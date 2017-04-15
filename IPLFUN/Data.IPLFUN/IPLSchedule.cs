@@ -226,13 +226,25 @@ namespace Data.IPLFUN
                     while (reader.Read())
                     {
                         BidQuestion schedule = new BidQuestion();
-                        schedule.bidQuestion = reader["Question"].ToString();
                         schedule.bidId = Convert.ToInt32(reader["bidId"]);
                         schedule.Team = reader["Team"].ToString();
                         schedule.TeamA = reader["TeamA"].ToString();
                         schedule.TeamB = reader["TeamB"].ToString();
+                        schedule.InFavour = reader["InFavour"].ToString();
+                        schedule.Against = reader["Against"].ToString();
+                        schedule.bidPoints = reader["bidPoints"].ToString();
+
+                        if (schedule.Team == "A")
+                        {
+                            schedule.bidQuestion = schedule.TeamA + " : " + reader["Question"].ToString() + "?";
+                        }
+                        if (schedule.Team == "B")
+                        {
+                            schedule.bidQuestion = schedule.TeamB + " : " + reader["Question"].ToString() + "?";
+                        }
                         schedule.MasterId = Convert.ToInt32(reader["Id"]);
                         schedule.AlreadySubmitted = Convert.ToBoolean(reader["AlreadySubmitted"]);
+                        schedule.IsBidActive = Convert.ToBoolean(reader["IsBidActive"]);
                         bidQuestions.Add(schedule);
                     }
 
@@ -245,11 +257,14 @@ namespace Data.IPLFUN
             }
         }
 
-        public int submitBidResultByBidder(bool value, int bidId, int userId)
+        public BidResult submitBidResultByBidder(bool value, int bidId, int userId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                SqlDataReader reader;
                 int success = -1;
+                List<BidHistory> history = null;
+                BidResult bidResult = new BidResult();
                 try
                 {
                     connection.Open();
@@ -258,14 +273,109 @@ namespace Data.IPLFUN
                     command.Parameters.Add(new SqlParameter("@Value", value));
                     command.Parameters.Add(new SqlParameter("@BidId", bidId));
                     command.Parameters.Add(new SqlParameter("@UserId", userId));
-                    success = (int)command.ExecuteScalar();
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        bidResult.IsSucceed = Convert.ToInt32(reader["IsSucceed"]);
+                        bidResult.InFavour = Convert.ToInt32(reader["InFavour"]);
+                        bidResult.Against = Convert.ToInt32(reader["Against"]);
+                        if (bidResult.IsSucceed == 1)
+                        {
+                            history = new List<BidHistory>();
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    BidHistory bidHistory = new BidHistory();
+                                    string teamA = reader["TeamA"].ToString();
+                                    string teamB = reader["TeamB"].ToString();
 
+                                    bidHistory.Match = teamA + " VS " + teamB;
+                                    if (reader["Team"].ToString() == "A")
+                                    {
+                                        bidHistory.Question = teamA + " : " + reader["Question"].ToString();
+                                    }
+                                    else
+                                    {
+                                        bidHistory.Question = teamB + " : " + reader["Question"].ToString();
+                                    }
+                                    bidHistory.Points = reader["BidPoints"].ToString();
+                                    bool answer = Convert.ToBoolean(reader["UserBid"].ToString());
+                                    if (answer) bidHistory.Answer = "Yes";
+                                    else bidHistory.Answer = "No";
+                                    history.Add(bidHistory);
+                                }
+                            }
+                        }
+                    }
+                    bidResult.BidHistory = history;
                 }
                 catch (Exception ex)
                 {
 
                 }
-                return success;
+                return bidResult;
+            }
+        }
+
+
+        public List<BidHistory> getBidderHistory(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlDataReader reader;
+                List<BidHistory> history = new List<BidHistory>();
+                int success = -1;
+                try
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("USP_GETUSERBIDHISTORY", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@UserId", userId));
+                    reader = command.ExecuteReader();
+                    decimal pointswin = 0;
+                    decimal pointsloose = 0;
+                    decimal pointsdraw = 0;
+                    while (reader.Read())
+                    {
+                        BidHistory bhistory = new BidHistory();
+
+                        string teamA = reader["TeamA"].ToString();
+                        string teamB = reader["TeamB"].ToString();
+
+                        bhistory.Match = teamA + " VS " + teamB;
+
+                        if (reader["Team"].ToString() == "A")
+                        {
+                            bhistory.Question = teamA + " : " + reader["Question"].ToString();
+                        }
+                        else
+                        {
+                            bhistory.Question = teamB + " : " + reader["Question"].ToString();
+                        }
+
+                        bhistory.MatchDate = reader["MatchDate"].ToString();
+
+                        pointsloose = Convert.ToDecimal(reader["PointsLoose"]);
+                        pointswin = Convert.ToDecimal(reader["PointsWin"]);
+
+                        if (reader["PointDraw"] != DBNull.Value)
+                            pointsdraw = Convert.ToDecimal(reader["PointDraw"]);
+
+                        if (pointsloose != 0)
+                            bhistory.Points = pointsloose.ToString("0.00");
+                        else if (pointswin != 0)
+                            bhistory.Points = "+" + pointswin.ToString("0.00");
+                        else if (pointsdraw != 0)
+                            bhistory.Points = pointsdraw.ToString("0.00");
+                        history.Add(bhistory);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return history;
             }
         }
     }
